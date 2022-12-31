@@ -1,0 +1,218 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon.png" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <title>LAPTOP SHOP</title>
+    <!--     Fonts and icons     -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/42d5adcbca.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Nucleo Icons -->
+    <link href="stylesheets/nucleo-icons.css" rel="stylesheet" />
+    <link href="stylesheets/nucleo-svg.css" rel="stylesheet" />
+    <!-- Popper -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <!-- Main Styling -->
+    <link
+      href="/stylesheets/argon-dashboard-tailwind.css?v=1.0.0"
+      rel="stylesheet"
+    />
+    <script language="javascript" src="/javascripts/update.js"></script>
+  </head>
+
+  <body>
+    <form
+      role="form"
+      method="post"
+      action="/{{product._id}}/product_update"
+      enctype="multipart/form-data"
+    >
+      <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
+
+      <div class="w-full p-6 d-flex mx-auto">
+
+        <div class="md:w-5/10 px-3 shrink-0">
+          <div
+            class="relative min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+          >
+            <div
+              class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0"
+            >
+              <div class="flex items-center">
+                <p class="mb-0 dark:text-white/80">Edit Product</p>
+                <button
+                  type="submit"
+                  id="submit"
+                  class="inline-block px-8 py-2 mb-4 ml-auto font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-blue-500 border-0 rounded-lg shadow-md cursor-pointer text-size-xs tracking-tight-rem hover:shadow-xs hover:-translate-y-px active:opacity-85"
+                >Lưu</button>
+              </div>
+            </div>
+            <div class="flex-auto p-6">
+              <p
+                class="leading-normal uppercase dark:text-white dark:opacity-60 text-size-sm"
+              >Product Information</p>
+              <div class="-mx-3">
+                <div class="w-full max-w-full px-3 shrink-0">
+                  <div class="mb-4">
+                    <label
+                      class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80"
+                    >Tên sản phẩm</label>
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      onchange="valition()"
+                      value="{{product.name}}"
+                      placeholder="Tên sản phẩm"
+                      class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-size-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0">
+                  <div class="mb-4">
+                    <label
+                      class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80"
+                    >Số lượng</label>
+                    <input
+                      type="text"
+                      name="quantity"
+                      id="quantity"
+                      onchange="valition()"
+                      value="{{product.quantity}}"
+                      placeholder="Số lượng"
+                      class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-size-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0">
+                  <div class="mb-4">
+                    <label
+                      class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80"
+                    >Giá</label>
+                    <input
+                      type="text"
+                      name="price"
+                      id="price"
+                      onchange="valition()"
+                      value="{{product.price}}"
+                      placeholder="Giá"
+                      class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-size-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0">
+                  <div class="mb-4">
+                    <label
+                      class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80"
+                    >Thương hiệu</label>
+                    <select
+                      type="text"
+                      name="brandId"
+                      placeholder="Nhãn hàng"
+                      class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-size-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                    >
+                      {{#each brands}}
+                        {{#if this.selected}}
+                          <option
+                            selected
+                            value="{{this._id}}"
+                          >{{this.name}}</option>
+                        {{else}}
+                          <option value="{{this._id}}">{{this.name}}</option>
+                        {{/if}}
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0">
+                  <div class="mb-4">
+                    <label
+                      class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80"
+                    >Loại</label>
+                    <select
+                      type="text"
+                      name="categoryId"
+                      placeholder="Nhãn hàng"
+                      class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-size-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                    >
+                      {{#each categories}}
+                        {{#if this.selected}}
+                          <option
+                            selected
+                            value="{{this._id}}"
+                          >{{this.name}}</option>
+                        {{else}}
+                          <option value="{{this._id}}">{{this.name}}</option>
+                        {{/if}}
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0">
+                  <div class="mb-4">
+                    <label
+                      class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80"
+                    >Ngày nhập</label>
+                    <input
+                      type="date"
+                      id="released"
+                      name="released"
+                      value="{{product.released}}"
+                      class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-size-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0">
+                  <div class="mb-4">
+                    <label
+                      class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80"
+                    >Mô tả</label>
+                    <input
+                      type="text"
+                      name="description"
+                      id="description"
+                      onchange="valition()"
+                      value="{{product.description}}"
+                      placeholder="Mô tả"
+                      class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-size-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label>Image</label>
+              <input
+                type="file"
+                id="image-file"
+                onchange="onChangeFile()"
+                name="image"
+              />
+              <img
+                id="image-view"
+                width="300"
+                height="300"
+                src="{{product.image}}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </body>
+  <!-- plugin for scrollbar  -->
+  <script src="javascripts/plugins/perfect-scrollbar.min.js" async></script>
+  <!-- main script file  -->
+  <script src="javascripts/argon-dashboard-tailwind.js?v=1.0.0" async></script>
+
+</html>
