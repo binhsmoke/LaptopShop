@@ -7,7 +7,7 @@ const { enumStatusOrder } = require('../utils/constants');
 
 class OrderController {
 
-    // mobile app
+    // mobile app// mobile app// mobile app// mobile app// mobile app// mobile app// mobile app// mobile app// mobile app// mobile app// mobile app// mobile app
     async index(req, res, next) {
         const { id } = req.params;
         let orders = await orderController.getAll();
@@ -32,27 +32,49 @@ class OrderController {
             await orderController.insert(data)
                 .then(async result => {
                     if (result) {
-                        // console.log('order create: ', result);
                         const result1 = body.cart.map(async item => {
                             const orderDetail = {
                                 order_id: result._id,
                                 quantity: item.quantity,
                                 product_each: item.product
                             }
-                            // console.log('order item: ', orderDetail);
                             await orderItemController.insert(orderDetail);
                         });
                         Promise.all(result1).then(() => {
                             res.json({ message: 'Thanh toán thành công' })
-                            // .catch(error => res.json(error));
+                            .catch(error => res.json(error));
                         });
                     }
                 })
                 .catch();
         }
-
     }
-
+    async one(req, res, next) {
+        const {
+            id, ido
+        } = req.params;
+        const order = await orderController.getById(ido);
+        const user = await customerController.getById(id);
+        const orderItem = await orderItemController.getAll(ido);
+        const list = orderItem.map(async (item) => {
+            const p = await productController.getById(item.product_each);
+            item = {
+                name: p.name,
+                price: p.price,
+                image: p.image,
+                quantity: item.quantity
+            }
+            return item;
+        })
+        Promise.all(list).then((list) => {
+            res.json({
+                order: order,
+                user: user,
+                list: list
+            })
+        })
+            .catch(error => res.json(error));
+    }
     async pendingList(req, res, next) {
         const { id } = req.params;
         let orders = await orderController.getAll();
@@ -60,7 +82,6 @@ class OrderController {
             orders = orders.filter(item => {
                 return item.user_id._id == id && item.status.code == enumStatusOrder.pending.code;
             });
-            // console.log('pending mobile will not render any shit', orders);
             res.json(orders);
         } else {
             res.json(null);
@@ -74,7 +95,6 @@ class OrderController {
             orders = orders.filter(item => {
                 return item.user_id._id == id && item.status.code == enumStatusOrder.shipping.code;
             });
-            // console.log('orders shipping??>',orders);
             res.json(orders);
         } else {
             res.json(null);
@@ -127,7 +147,7 @@ class OrderController {
         }
     }
 
-    //web
+    //web//web//web//web//web//web//web//web//web//web//web//web//web//web//web//web//web//web//web
     async indexweb(req, res, next) {
         const orders = await orderController.getAll();
         orders.forEach(item => {item.total= numberWithComma(item.total)})
@@ -143,10 +163,8 @@ class OrderController {
         const order = await orderController.getById(id);
         const _user = await customerController.getById(order.user_id);
         const orderItem = await orderItemController.getAll(id);
-        // console.log('orderItem>',orderItem)
         const list = orderItem.map(async (item) => {
             const p = await productController.getById(item.product_each);
-            // console.log("p>>>",p);
             item = {
                 name: p.name,
                 price: numberWithComma(p.price),
