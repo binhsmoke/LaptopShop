@@ -20,7 +20,8 @@ const orderSchema = new Schema({
     user_id: {
         type: ObjectId,
         ref: 'customer',
-    }
+    },
+    createdAt: {type: Date, default: Date.now}
 });
 
 orderSchema.set('timestamps', true);
