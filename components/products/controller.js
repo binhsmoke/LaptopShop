@@ -2,11 +2,9 @@ const productService = require('./service');
 const date = require('../../utils/date');
 
 exports.getProducts = async (sort) => {
-    // console.log('ham getpr')
     try {
         let products = await productService.getAllProduct();
         let newProducts = [];
-        // console.log("sort: ", sort)
         if (sort === 'asc') {
             newProducts = products.sort((p1, p2) => {
                 return p2.price - p1.price;

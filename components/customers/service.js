@@ -30,3 +30,8 @@ exports.getById = async (id) => {
     return user;
 }
 
+exports.getAll = async () => {
+    const users = customerModel.find().sort({ username: 1});
+    return users;
+}
+

@@ -4,8 +4,6 @@ const bcryt = require('bcryptjs');
 exports.login = async (username, password) => {
     try {
         const employee = await employeeService.login(username);
-        console.log('username password', username, password)
-        console.log('!employee', employee)
         const checkPassword = await bcryt.compare(password, employee.password);
         if (!checkPassword) {
             console.log('!checkPassword', checkPassword)

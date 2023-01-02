@@ -208,6 +208,72 @@ class OrderController {
             })
             .catch(error => res.json(error));
     }
+
+    async getToday(req, res, next) {
+        let today = new Date();
+        let endDay = today.setUTCHours(23, 59, 59, 999);
+        let startDay = today.setUTCHours(0, 0, 0, 0);
+        let orders = await orderController.getDay(startDay, endDay);
+        res.json(orders);
+    }
+
+    async get10DaysAnalysis(req, res, next) {
+        let today = new Date();
+        today = today.setUTCHours(23, 59, 59, 999);
+        let last = today - (6 * 24 * 60 * 60 * 1000);
+        last = new Date(last);
+        last = last.setUTCHours(0, 0, 0, 0);
+        today = new Date(today);
+        last = new Date(last);
+        let list10Days = [];
+        for (var i = 0; i <= 7; i++) {
+            var value = new Date(today - (i * 24 * 60 * 60 * 1000));
+            value.setUTCHours(0, 0, 0, 0);
+            value = new Date(value);
+            var day = value.getDay();
+            list10Days.push({ date: value, day: convertDay(day), total: 0 });
+        }
+        const listOrder = await orderController.getDay(last, today)
+            .then((result) => {
+                if (result) {
+                    result = result.map(element => {
+                        element = {
+                            date: new Date(new Date(element.updatedAt).setUTCHours(0, 0, 0, 0)),
+                            total: element.total
+                        }
+                        return element;
+                    });
+                    return result;
+                }
+            })
+            .then((result) => {
+                list10Days = list10Days.concat(result);
+                const list = list10Days.reduce((acc, element) => {
+                    if (element.date in acc) {
+                        acc[element.date].total = element.total + acc[element.date].total
+                    } else {
+                        acc[element.date] = element;
+                    }
+                    return acc;
+                }, {});
+                const list1 = Object.values(list);
+                res.json(list1.reverse());
+            })
+            .catch(error => res.json(error));
+    }
+
+    async getAll(req, res, next) {
+        let orders = await orderController.getAll();
+        res.json(orders);
+    }
+
+    async getSold(req, res, next) {
+        let orders = await orderController.getAll();
+        orders = orders.filter(item => {
+            return item.status.code == 3;   //get don hang thanh cong
+        })
+        res.json(orders);
+    }
 }
 
 
@@ -219,5 +285,22 @@ const numberWithComma = x => {
       console.log(error);
     }
   };
-
+  function convertDay(day) {
+    switch (day) {
+        case 0:
+            return 'CN';
+        case 1:
+            return 'T2';
+        case 2:
+            return 'T3';
+        case 3:
+            return 'T4';
+        case 4:
+            return 'T5';
+        case 5:
+            return 'T6';
+        case 6:
+            return 'T7';
+    }
+}
 module.exports = new OrderController();

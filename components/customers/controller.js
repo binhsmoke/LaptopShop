@@ -93,3 +93,13 @@ exports.getById = async (id) => {
     return customer;
 }
 
+exports.getAll = async () => {
+    let data = await customerService.getAll();
+    data = data.map(user => {
+        user = {
+            ...user?._doc
+        }
+        return user;
+    });
+    return data;
+}

@@ -22,3 +22,7 @@ exports.change = async (id, status) => {
     const o = await orderModel.findByIdAndUpdate(id, {status: status});
     return o;
 }
+exports.getInDay = async (begin, end) => {
+    const o = await orderModel.find({updatedAt: {$gte: begin, $lt: end}, status: enumStatusOrder.taken }).sort({updatedAt: 1});
+    return o;
+}

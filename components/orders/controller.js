@@ -27,3 +27,14 @@ exports.getById = async (id) => {
 exports.update = async (id, status) => {
     return await orderService.change(id, status);
 }
+
+exports.getDay = async (begin, end) => {
+    let data = await orderService.getInDay(begin, end);
+    data = data.map(item => {
+        item = {
+            ...item?._doc
+        }
+        return item;
+    });
+    return data;
+}
