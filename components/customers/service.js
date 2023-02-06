@@ -35,3 +35,20 @@ exports.getAll = async () => {
     return users;
 }
 
+exports.getByEmail = async (email) => {
+    const user = await customerModel.findOne({ email })
+    return user
+}
+
+
+exports.updatePassword = async (user) => {
+    await customerModel.updateOne(
+        { _id: user._id },
+        {
+            $set:
+            {
+                password: user.password,
+            }
+        }
+    )
+}

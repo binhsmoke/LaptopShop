@@ -103,3 +103,4 @@ exports.getAll = async () => {
     });
     return data;
 }
+

@@ -6,6 +6,7 @@ const employeeController = require('../components/employee/controller');
 const customerController = require('../components/customers/controller');
 const productController = require('../components/products/controller');
 const orderController = require('../components/OrderController');
+const otpController = require('../components/otp/controller')
 
 /* API EMPLOYEE. */
 router.post("/login", async function (req, res, next) {
@@ -80,6 +81,18 @@ router.get("/customers/:id/detail", async function (req, res, next) {
     const customer = await customerController.getCustomerById(id);
     res.json(customer);
 });
+
+router.post('/sendMailForgotPassword', async (req, res, next) => {
+    const { email } = req.body
+    const result = await otpController.sendEmail(email)
+    res.status(result.status).json(result)
+})
+
+router.post('/verifyOtp', async (req, res, next) => {
+    const { email, codeOtp, newPassword } = req.body
+    const result = await otpController.verify(email, codeOtp, newPassword)
+    res.status(result.status).json(result)
+})
 
 router.post('/customers/:id/cart/checkout', orderController.create);
 router.get('/customers/:id/orders', orderController.index);
