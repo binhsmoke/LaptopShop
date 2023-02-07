@@ -2,18 +2,6 @@ const edit = (id) => {
     window.location.href = `http://localhost:3001/${id}/product_update`
 }
 
-const valition = () => {
-    const name = document.getElementById('name').value;
-    const price = document.getElementById('price').value;
-    const submit = document.getElementById('submit');
-
-    if (!name || name.trim().length == 0 || !price || price.trim().length == 0 || Number(price) < 0) {
-        submit.disabled = true;
-    } else {
-        submit.disabled = false;
-    }
-}
-
 const onChangeFile = () => {
     const file = document.getElementById('image-file').files[0];
     const reader = new FileReader();

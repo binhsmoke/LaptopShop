@@ -57,15 +57,21 @@ router.post("/login", async function (req, res, next) {
 });
 router.post("/", [upload.single("image")], async function (req, res, next) {
   let { body, file } = req;
-  let image = "";
-  if (file) {
-    // image = `http://192.168.43.229/images/${file.filename}`
-    image = `http://localhost:3001/images/${file.filename}`;
-    body = { ...body, image };
-  }
-  await productController.insert(body);
-  console.log("req.file", file);
-  res.redirect("/products");
+  const listPro = await productController.getProducts();
+  const check = listPro.filter((item) => item.name == body.name);
+  if(check.length <=0) {
+    let image = "";
+    if (file) {
+      // image = `http://192.168.43.229/images/${file.filename}`
+      image = `http://localhost:3001/images/${file.filename}`;
+      body = { ...body, image };
+    }
+    await productController.insert(body);
+    // console.log("req.file", file);
+    res.redirect("/products");
+  }else{
+    res.send(`<script>alert("Sản phẩm đã tồn tại"); window.location.href = "/product_insert"; </script>`);
+  };
 });
 
 router.delete("/:id/delete", async function (req, res, next) {
@@ -77,7 +83,7 @@ router.delete("/:id/delete", async function (req, res, next) {
 router.get("/:id/product_update", async function (req, res, next) {
   const { id } = req.params;
   const product = await productController.getProductById(id);
-  console.log("product", product);
+  // console.log("product", product);
   const categories = await categoriesController.getCategoriesSelected(
     product.categoryId._id
   );

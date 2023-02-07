@@ -11,14 +11,11 @@ exports.register = async (username, password, name, email, phone, address, image
 }
 
 exports.getAllCustomer = async () => {
-    return await customerModel.find({});
+    return await customerModel.find();
 }
 
 exports.delete = async (id) => {
     await customerModel.findByIdAndDelete(id);
-}
-exports.update = async (id, customer) => {
-    await customerModel.findByIdAndUpdate(id, customer);
 }
 exports.getCustomerById = async (id) => {
     const customer = await customerModel.findById(id);
@@ -35,3 +32,10 @@ exports.getAll = async () => {
     return users;
 }
 
+exports.update = async (id, name, phone, address, email) => {
+    return await customerModel.findByIdAndUpdate(id, {name:name , phone:phone, email:email, address: address});
+}
+
+exports.updatePassword = async (id, newPassword) => {
+    return await customerModel.findByIdAndUpdate(id, {password: newPassword});
+}

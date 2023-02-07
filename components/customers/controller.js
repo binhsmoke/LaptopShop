@@ -30,7 +30,7 @@ exports.register = async (username, password, confirmPassword, name, email, phon
     }
 
     const hash = await bcrypt.hash(password, await bcrypt.genSalt(10));
-    customer = await customerService.register(username, hash, name, email, phone, address, image);
+    let customer = await customerService.register(username, hash, name, email, phone, address, image);
     console.log('register success');
     return { _id: customer._id }
 
@@ -102,4 +102,26 @@ exports.getAll = async () => {
         return user;
     });
     return data;
+}
+
+exports.update = async (id, name, phone, address, email) => {
+    return await customerService.update(id, name, phone, address, email);
+}
+
+exports.getById = async (id) => {
+    let user = await customerService.getById(id);
+    user = {
+        ...user?._doc
+    }
+    return user;
+}
+exports.changePass = async (id, password, newPassword) => {
+    const user = await customerService.getById(id);
+    //console.log('user: ', user.password);
+    const checkPassword = await bcrypt.compare(password, user.password);
+    if (!checkPassword) {
+        return 1;
+    }
+    const hash = await bcrypt.hash(newPassword, await bcrypt.genSalt(10));
+    return await customerService.updatePassword(id, hash);
 }

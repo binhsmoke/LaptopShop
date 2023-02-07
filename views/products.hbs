@@ -166,7 +166,7 @@
                 <h4 class="m-3 text-end">Danh sách sản phẩm</h4>
               </div>
               <div class="col-9 text-end">
-                <button class="btn btn-outline-primary btn-sm mb-0">Thêm sản phẩm mới</button>
+                <button class="btn btn-outline-primary btn-sm mb-0"><a href="/product_insert">Thêm sản phẩm mới</a></button>
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -176,10 +176,8 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên sản phẩm</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mô tả</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Giá
-                        tiền</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ngày
-                        sản xuất</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Loại / Thương hiệu</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ngày sản xuất</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -191,17 +189,24 @@
                           <div>
                             <img src="{{this.image}}" class="avatar avatar-sm me-3" alt="user1">
                           </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{this.name}}</h6>
+                          <div class="d-flex flex-column justify-content-center" style="width: 400px;">
+                            <h6 class="mb-0 text-sm" style="display: inline-block;
+                              width: 250px;
+                              white-space: nowrap;
+                              overflow: hidden !important;
+                              text-overflow: ellipsis;">{{this.name}}</h6>
                             <p class="text-sm text-secondary mb-0">Giá tiền : {{this.price}}</p>
                           </div>
-                        </div>
-                      </td>
-                      <td style="white-space:pre-line">
+                          </div>
+                          </td>
+                          <td style="white-space:pre-line">
                         <p class="text-xs font-weight-bold mb-0">{{this.description}}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">{{this.brandId.name}}</span>
+                        <div class="d-flex flex-column justify-content-center">
+                        <span class="badge badge-sm bg-gradient-info" style="margin-bottom: 10px;">{{this.categoryId.name}}</span>
+                        <span class="badge badge-sm bg-gradient-warning">{{this.brandId.name}}</span>
+                        </div>
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{this.released}}</span>
@@ -223,8 +228,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </main>
   <div class="fixed-plugin">

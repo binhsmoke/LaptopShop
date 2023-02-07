@@ -6,6 +6,7 @@ const employeeController = require('../components/employee/controller');
 const customerController = require('../components/customers/controller');
 const productController = require('../components/products/controller');
 const orderController = require('../components/OrderController');
+const UserController = require("../components/UserController");
 
 /* API EMPLOYEE. */
 router.post("/login", async function (req, res, next) {
@@ -50,7 +51,7 @@ router.post("/customer/register", async function (req, res, next) {
     const { username, password, confirmPassword, name, email, phone, address } = req.body;
     const result = await customerController.register(username, password, confirmPassword, name, email, phone, address);
     if (result == 1) {
-        res.json({ status: false, message: "Email đã được đăng ký trước đó" });
+        res.json({ status: false, message: "User name đã được đăng ký trước đó" });
     }
     else {
         res.json({ status: true, message: "Đăng ký tài khoản thành công" });
@@ -93,4 +94,10 @@ router.get('/customers/:id/orders/:ido', orderController.one);
 //
 // router.get('/orders', orderController.indexweb);
 
+
+
+//user router
+router.get('/customers/:id', UserController.one);
+router.post('/customers/:id/changeName', UserController.changeName);
+router.post('/customers/:id/changePass', UserController.changePass);
 module.exports = router;

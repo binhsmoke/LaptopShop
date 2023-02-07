@@ -10580,7 +10580,7 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #5e72e4 !important;
+  background-color: #c99789 !important;
 }
 
 .bg-secondary {
@@ -10624,7 +10624,7 @@ fieldset:disabled .btn {
 }
 
 .bg-gray-100 {
-  background-color: #f8f9fa !important;
+  background-color: #fce9db !important;
 }
 
 .bg-gray-200 {
@@ -26931,6 +26931,11 @@ pre[class*="language-"] {
   .ps {
     overflow: auto !important;
   }
+}
+
+.jt {
+  display:flex;
+  justify-content: space-around;
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */

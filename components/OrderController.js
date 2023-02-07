@@ -12,7 +12,7 @@ class OrderController {
         const { id } = req.params;
         let orders = await orderController.getAll();
         orders = orders.filter(item => {
-            return item.user_id._id == id;
+            return item.user_id == id;
         });
         res.json(orders);
     }
@@ -42,8 +42,7 @@ class OrderController {
                         });
                         Promise.all(result1).then(() => {
                             res.json({ message: 'Thanh toán thành công' })
-                            .catch(error => res.json(error));
-                        });
+                        }).catch(error => res.json(error));;
                     }
                 })
                 .catch();
@@ -78,11 +77,15 @@ class OrderController {
     async pendingList(req, res, next) {
         const { id } = req.params;
         let orders = await orderController.getAll();
+        // console.log('>>>>orders', orders);
+        // console.log('>>>>id', id);
+        // console.log('req.params ne >>', req.params)
         if (orders.length > 0) {
             orders = orders.filter(item => {
-                return item.user_id._id == id && item.status.code == enumStatusOrder.pending.code;
+                return item.user_id.equals(id) && item.status.code == enumStatusOrder.pending.code;
             });
             res.json(orders);
+        // console.log('orders ne >>', orders)
         } else {
             res.json(null);
         }
@@ -93,7 +96,7 @@ class OrderController {
         let orders = await orderController.getAll();
         if (orders.length > 0) {
             orders = orders.filter(item => {
-                return item.user_id._id == id && item.status.code == enumStatusOrder.shipping.code;
+                return item.user_id.equals(id) && item.status.code == enumStatusOrder.shipping.code;
             });
             res.json(orders);
         } else {
@@ -107,7 +110,7 @@ class OrderController {
         let orders = await orderController.getAll();
         if (orders.length > 0) {
             orders = orders.filter(item => {
-                return item.user_id._id == id && item.status.code == enumStatusOrder.canceled.code;
+                return item.user_id.equals(id) && item.status.code == enumStatusOrder.canceled.code;
             });
             res.json(orders);
         } else {
@@ -139,7 +142,7 @@ class OrderController {
         let orders = await orderController.getAll();
         if (orders.length > 0) {
             orders = orders.filter(item => {
-                return item.user_id._id == id && item.status.code === enumStatusOrder.taken.code;
+                return item.user_id.equals(id) && item.status.code === enumStatusOrder.taken.code;
             });
             res.json(orders);
         } else {
