@@ -39,3 +39,20 @@ exports.update = async (id, name, phone, address, email) => {
 exports.updatePassword = async (id, newPassword) => {
     return await customerModel.findByIdAndUpdate(id, {password: newPassword});
 }
+exports.getByEmail = async (email) => {
+    const user = await customerModel.findOne({ email })
+    return user
+}
+
+
+exports.updatePassword = async (user) => {
+    await customerModel.updateOne(
+        { _id: user._id },
+        {
+            $set:
+            {
+                password: user.password,
+            }
+        }
+    )
+}

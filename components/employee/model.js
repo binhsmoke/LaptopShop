@@ -6,7 +6,6 @@ const employeeSchema = new Schema({
     id: {type : ObjectId},
     username: {type : String, requiredPaths: true},
     password: {type : String, requiredPaths: true}
-
 });
 
 module.exports = mongoose.model('employee', employeeSchema);
